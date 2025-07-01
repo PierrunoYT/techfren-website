@@ -7,7 +7,8 @@ This directory contains all blog posts for the techfren website. The blog system
 1. Create a new `.md` file in this directory
 2. Add the required frontmatter at the top of the file
 3. Write your content in markdown
-4. Add the filename (without `.md`) to the `BLOG_POST_SLUGS` array in `src/utils/blogUtils.js`
+
+**That's it!** The blog system will automatically discover your new post - no need to manually update any code files.
 
 ## Required Frontmatter
 
@@ -46,16 +47,9 @@ Your content goes here...
 More content...
 ```
 
-2. **Update the slug list** in `src/utils/blogUtils.js`:
-```javascript
-const BLOG_POST_SLUGS = [
-  'welcome-to-my-blog',
-  'building-with-ai-agents',
-  'my-awesome-post'  // Add your new post here
-];
-```
+2. **No manual configuration needed** - the system automatically finds your post:
 
-That's it! Your blog post will now appear in the blog.
+The blog system will automatically discover your new post during the next build. The generated blog index will include all markdown files in this directory.
 
 ## File Naming
 
@@ -65,7 +59,7 @@ That's it! Your blog post will now appear in the blog.
 
 ## How It Works
 
-The blog system dynamically loads each markdown file and extracts metadata from the frontmatter. No build process or index file is needed - just add your markdown file and update the slug list in the code.
+The blog system automatically discovers markdown files in this directory and extracts metadata from the frontmatter. During the build process, a script scans this directory and generates a blog index file (`/public/blogIndex.json`) that the frontend uses to load posts dynamically. No manual configuration or index file maintenance is needed - just add your markdown file!
 
 ## Notes
 

@@ -4,8 +4,9 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "dev": "vite --port 1234",
-        "build": "vite build",
+        "dev": "npm run generate:blog && vite --port 1234",
+        "build": "npm run generate:blog && vite build",
+        "generate:blog": "node scripts/generateBlogIndex.js",
         "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },

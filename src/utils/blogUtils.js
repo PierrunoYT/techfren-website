@@ -43,18 +43,37 @@ const parseFrontmatter = (content) => {
   return { data, content: bodyContent };
 };
 
-// List of blog post slugs - add new blog post filenames here (without .md extension)
-const BLOG_POST_SLUGS = [
-  'future-of-software'
-];
+// Load blog post slugs from generated index
+const loadBlogPostSlugs = async () => {
+  try {
+    const response = await fetch('/blogIndex.json');
+    if (!response.ok) {
+      console.warn('Failed to load blog index, falling back to empty list');
+      return [];
+    }
+    const index = await response.json();
+    return index.posts || [];
+  } catch (error) {
+    console.error('Error loading blog index:', error);
+    return [];
+  }
+};
 
 // Load blog posts index by fetching each markdown file
 export const loadBlogIndex = async () => {
   try {
     const posts = [];
+    
+    // Get the list of blog post slugs from the generated index
+    const blogPostSlugs = await loadBlogPostSlugs();
+    
+    if (blogPostSlugs.length === 0) {
+      console.warn('No blog posts found in index');
+      return [];
+    }
 
     // Fetch each blog post and extract metadata
-    for (const slug of BLOG_POST_SLUGS) {
+    for (const slug of blogPostSlugs) {
       try {
         const response = await fetch(`/blog-content/${slug}.md`);
         if (!response.ok) {
